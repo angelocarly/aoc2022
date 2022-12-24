@@ -52,3 +52,42 @@ TEST( Reorganizer, CheckPrioritySum )
     int thePrioritySum = Reorganizer::CalculatePrioritySums( theBackpacks );
     EXPECT_EQ( thePrioritySum, 157 );
 }
+
+TEST( Reorganizer, FindAuthenticityBadge )
+{
+    std::vector< std::string > theBackpacks =
+        {
+            "vJrwpWtwJgWrhcsFMMfFFhFp",
+            "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+            "PmmdzqPrVvPwwTWBwg"
+        };
+    char theAuthenticityBadge = Reorganizer::FindAuthenticityBadge( theBackpacks );
+    EXPECT_EQ( theAuthenticityBadge, 'r' );
+}
+
+TEST( Reorganizer, FindAuthenticityBadge2 )
+{
+    std::vector< std::string > theBackpacks =
+        {
+            "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+            "ttgJtRGJQctTZtZT",
+            "CrZsJsPPZsGzwwsLwLmpwMDw"
+        };
+    char theAuthenticityBadge = Reorganizer::FindAuthenticityBadge( theBackpacks );
+    EXPECT_EQ( theAuthenticityBadge, 'Z' );
+}
+
+TEST( Reorganizer, CheckAuthenticitySum )
+{
+    std::vector< std::string > theBackpacks =
+        {
+            "vJrwpWtwJgWrhcsFMMfFFhFp",
+            "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+            "PmmdzqPrVvPwwTWBwg",
+            "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+            "ttgJtRGJQctTZtZT",
+            "CrZsJsPPZsGzwwsLwLmpwMDw"
+        };
+    int theAuthenticitySum = Reorganizer::CalculateAuthenticitySums( theBackpacks );
+    EXPECT_EQ( theAuthenticitySum, 70 );
+}

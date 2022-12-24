@@ -32,7 +32,7 @@ int CalculateResultA( std::vector< std::string > inInputStrings )
 
 int CalculateResultB( std::vector< std::string > inInputStrings )
 {
-    return 0;
+    return Reorganizer::CalculateAuthenticitySums( inInputStrings );
 }
 
 int main()
