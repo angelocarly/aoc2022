@@ -14,12 +14,18 @@ add_executable( ${PROJECT_NAME} ${SOURCES} )
 target_include_directories( ${PROJECT_NAME} PUBLIC "${SRC_DIR}" )
 set_property( TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17 )
 
-# Copy input file
+# Copy input files
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_CURRENT_SOURCE_DIR}/input
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/input
+)
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/testinput
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/testinput
 )
 
 # glm
