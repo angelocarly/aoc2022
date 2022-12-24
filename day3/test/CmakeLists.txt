@@ -1,0 +1,19 @@
+enable_testing()
+
+set( TEST_EXECUTABLE ${PROJECT_NAME}_tst )
+
+# Executable definition and properties
+add_executable(
+    ${TEST_EXECUTABLE}
+        Source/test.cpp
+)
+set_property( TARGET ${TEST_EXECUTABLE} PROPERTY CXX_STANDARD 17 )
+
+# Add to project
+target_link_libraries( ${TEST_EXECUTABLE} PUBLIC ${PROJECT_NAME}_lib )
+
+# Google test
+find_package( GTest REQUIRED )
+target_link_libraries( ${TEST_EXECUTABLE} PUBLIC GTest::gtest_main )
+include( GoogleTest )
+gtest_discover_tests( ${TEST_EXECUTABLE} )

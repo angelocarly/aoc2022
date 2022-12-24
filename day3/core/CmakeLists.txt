@@ -1,0 +1,44 @@
+
+# Source files
+set( SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}" )
+set( LIB_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../lib" )
+set(
+    SOURCES
+        Reorganizer.h
+        Source/Reorganizer.cpp
+)
+
+# Executable definition and properties
+add_executable( ${PROJECT_NAME} ${SOURCES} Source/main.cpp )
+target_include_directories( ${PROJECT_NAME} PUBLIC "${SRC_DIR}" )
+set_property( TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17 )
+
+# Library definition and properties
+add_library( ${PROJECT_NAME}_lib STATIC ${SOURCES} )
+target_link_libraries( ${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_lib )
+
+# Copy input files
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/../data/input
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/input
+)
+
+# glm
+find_package( glm REQUIRED )
+include_directories( ${GLM_INCLUDE_DIRS} )
+link_directories( ${GLM_LIBRARY_DIRS} )
+add_definitions( ${GLM_DEFINITIONS} )
+
+# spdlog
+find_package( spdlog REQUIRED )
+target_link_libraries( ${PROJECT_NAME} PUBLIC spdlog::spdlog )
+target_link_libraries( ${PROJECT_NAME}_lib PUBLIC spdlog::spdlog )
+
+# Boost
+find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
+target_link_libraries( ${PROJECT_NAME} PUBLIC Boost::program_options )
+target_link_libraries( ${PROJECT_NAME}_lib PUBLIC Boost::program_options )
+
+set_property( TARGET ${PROJECT_NAME} PROPERTY FOLDER "core" )
